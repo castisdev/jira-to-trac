@@ -1,8 +1,5 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Receive Jira Webhook messages and crate Trac tickets for them.
-"""
 
 import json
 from http.server import BaseHTTPRequestHandler
@@ -16,8 +13,6 @@ CC = 'cc'
 
 
 class JiraWebhookHandler(BaseHTTPRequestHandler):
-    """ handle jira webhook messages"""
-
     def do_POST(self):
         content_length = self.headers['Content-Length']
         if content_length:
