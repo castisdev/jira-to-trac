@@ -26,29 +26,29 @@ class postRequestHandler(BaseHTTPRequestHandler):
             #print('Commit added with reporter : %s' % post_data["issue"]["fields"]["reporter"]["displayName"])
             #print('Commit added with component : %s' % post_data["issue"]["fields"]["components"]["name"])
             #print('Commit added with owner : %s' % post_data["issue"]["fields"]["assignee"])
-            
+
             trac_rpc_url = 'http://%s:%s@%s/login/rpc' % (user, password, trac_url)
             server = xmlrpc.client.ServerProxy(trac_rpc_url)
- 
+
             description = post_data["issue"]["fields"]["description"]
             summary = post_data["issue"]["fields"]["summary"]
             reporter = post_data["issue"]["fields"]["reporter"]["displayName"]
             #owner = post_data["issue"]["fields"]["assignee"]
-            
+
             ret = server.ticket.create(summary, description, {'component':'', 'type': '', 'due_date': '2015.1R(0102)', 'reporter': reporter, 'exp_duedate': '2015.1R(0102)', 'owner': 'jhahn', 'priority': '1', 'milestone':'', 'cc':cc, 'man_day':'', 'ex_man_day':''})
             print('ticket #%d [%s] created.' % (ret, server.ticket.get(ret)[3]['summary']))
         #else:
         #   self.send_error(404, 'File Not Found %s' % self.path)
-         
-        return
-        
 
- 
-         
+        return
+
+
+
+
 def run():
     server = HTTPServer(('', 8000), postRequestHandler)
     print('Server started')
     server.serve_forever()
-         
+
 if __name__ == '__main__':
     run()
