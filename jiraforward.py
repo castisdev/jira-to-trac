@@ -20,7 +20,7 @@ class JiraWebhookHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.end_headers()
             body = self.rfile.read(content_length)
-            post_data = json.loads(body)
+            post_data = json.loads(body.decode('utf-8'))
 
             trac_rpc_url = 'http://%s:%s@%s/login/rpc' % (USER, PASSWORD, TRAC_URL)
             server = xmlrpc.client.ServerProxy(trac_rpc_url)
